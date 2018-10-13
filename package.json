@@ -4,7 +4,7 @@
   "description": "Assignment for Redmart by Rahul Khanvilkar",
   "main": "index.html",
   "scripts": {
-    "test": "jest"
+    "test": "jest --watchAll --verbose"
   },
   "author": "Rahul Khanvilkar",
   "license": "ISC",
