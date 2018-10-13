@@ -1,0 +1,14 @@
+{
+  "name": "redmart-frontend",
+  "version": "1.0.0",
+  "description": "Assignment for Redmart by Rahul Khanvilkar",
+  "main": "index.html",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Rahul Khanvilkar",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^23.6.0"
+  }
+}

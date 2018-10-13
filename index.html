@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Redmart Assignment</title>
+  <meta name="description" content="Assignment for Redmart build by Rahul Khanvilkar">
+  <meta name="author" content="Rahul Khanvilkar">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+  <!-- CSS  -->
+  <link rel="stylesheet" href="css/index.css">
+
+  <!-- <link rel="stylesheet" href="css/skeleton.css"> -->
+  <!-- Javascript  -->
+  <script src="./javascript/index.js"></script>
+
+</head>
+
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+    <div class="header">
+      <h2>Meeting Scheduler</h2>
+      <h3 id="todaysDate">Today's Date</h3>
+    </div>
+    <div class="calendar">
+      <div class="time">
+        <table id="time-table">
+        </table>
+      </div>
+      <div id="slots">
+
+      </div>
+    </div>
+    <button class="button" onclick="onClickAddMeeting()">+ Add meeting</button>
+    <div id="add-form">
+      <form id="addMeetingForm">
+        <label>Name</label>
+        <input type="text" class="input" name="id" placeholder="Meeting Name" value="Meeting 5" />
+        <br/>
+        <label>Starts</label>
+        <input type="time" class="input" name="start" placeholder="Start Time" value="10:20" />
+        <br/>
+        <label>Ends</label>
+        <input type="time" class="input" name="end" placeholder="End Time" value="10:30" />
+        <br/>
+      </form>
+      <button type="button" class="input" onclick="submitForm()">Save</button>
+    </div>
+  </div>
+
+  <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+
+</html>
