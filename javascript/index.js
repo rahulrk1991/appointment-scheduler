@@ -1,66 +1,62 @@
 let meetingData = [
   {
     id: "Meeting 1",
-    start: 60,
-    end: 120
-  }, {
-    id: "Meeting 2",
-    start: 140,
-    end: 180
-  }, {
+    start: 0,
+    end: 30
+  },
+  {
     id: "Meeting 3",
     start: 60,
-    end: 80
-  }, {
+    end: 120
+  },
+  {
     id: "Meeting 4",
-    start: 90,
-    end: 110
-  }, {
-    id: "Meeting 5",
-    start: 80,
+    start: 150,
+    end: 180
+  },
+  {
+    id: "Meeting 2",
+    start: 60,
     end: 90
   }
 ];
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
   setTodaysDate();
   initializeTimeLine();
   buildMeetings(meetingData);
 });
 
+function getTodaysDate() {
+  return new Date().toString().substring(4, 15);
+}
+
 function setTodaysDate() {
-  let todaysDate = document.getElementById("todaysDate");
-  console.log(new Date());
-  todaysDate.innerHTML = new Date()
-    .toString()
-    .substring(4, 15);
+  let todaysDateDiv = document.getElementById("todaysDate");
+  let todaysDate = getTodaysDate();
+  console.log(`Building appointment scheduler for today : ${todaysDate}`);
+  todaysDateDiv.innerHTML = `Schedule - ${todaysDate}`;
 }
 
 function initializeTimeLine() {
-  let timeTable = document.getElementById("time-table");
+  let timeTable = document.getElementById("timeTable");
   for (let i = 9; i <= 21; i++) {
-    let tr = `<tr class="table-row"><td>${i} -</td></tr>`;
+    let tr = `<tr class="table-row"><td>${i} : 00 -</td></tr>`;
     timeTable.innerHTML += tr;
   }
   console.log("Loaded Timeline");
 }
 
 function compareStartTimes(a, b) {
-  if (a.start < b.start) 
-    return -1;
-  else if (a.start > b.start) 
-    return 1;
-  else if (a.end < b.end) 
-    return -1;
-  else 
-    return 1;
-  }
+  if (a.start < b.start) return -1;
+  else if (a.start > b.start) return 1;
+  else if (a.end < b.end) return -1;
+  else return 1;
+}
 
 function buildMeetings(meeting) {
   meeting.sort(compareStartTimes);
   let i = 0;
-  console.log(meeting);
-  // return;
   while (i < meeting.length) {
     let room = [];
     console.log(i);
@@ -87,8 +83,6 @@ function buildMeetings(meeting) {
       meeting[k].size = room.length;
     }
     i = j + 1;
-
-    console.log(j, room);
   }
   console.log(meeting);
   renderMeetings(meeting);
@@ -99,17 +93,11 @@ function renderMeetings(meetings) {
   slots.innerHTML = "";
   for (let i = 0; i < meetings.length; i++) {
     let meeting = meetings[i];
-    let slot = `<div class="meeting" style="width:${ 600 / meeting.size}px;height:${ (meeting.end - meeting.start) * 2}px;margin-top:${meeting.start * 2}px;margin-left:${meeting.room * (600 / meeting.size)}px">${meeting.id}</div>`;
+    let slot = `<div class="meeting" style="width:${600 /
+      meeting.size}px;height:${(meeting.end - meeting.start) *
+      2}px;margin-top:${meeting.start * 2}px;margin-left:${meeting.room *
+      (600 / meeting.size)}px;z-index:${meeting.room}">${meeting.id}</div>`;
     slots.innerHTML += slot;
-  }
-}
-
-function onClickAddMeeting() {
-  let addFormDiv = document.getElementById("add-form");
-  if (addFormDiv.style.visibility == "hidden" || addFormDiv.style.visibility == "") {
-    addFormDiv.style.visibility = "visible";
-  } else {
-    addFormDiv.style.visibility = "hidden";
   }
 }
 
@@ -117,13 +105,10 @@ function convertTimeToNumbers(time) {
   let hours = parseInt(time.substring(0, 2));
   let minutes = parseInt(time.substring(3, 5));
   let timeInMinutes = (hours - 9) * 60 + minutes;
-  if (timeInMinutes < 0) 
-    return 0
-  else if (timeInMinutes > 720) 
-    return 720
-  else 
-    return (hours - 9) * 60 + minutes;
-  }
+  if (timeInMinutes < 0) return 0;
+  else if (timeInMinutes > 720) return 720;
+  else return (hours - 9) * 60 + minutes;
+}
 
 function submitForm() {
   let form = document.getElementById("addMeetingForm");
@@ -136,9 +121,11 @@ function submitForm() {
       newMeeting[element.name] = element.value;
     }
   }
-  console.log(newMeeting);
   meetingData.push(newMeeting);
   buildMeetings(meetingData);
 }
 
+module.exports.meetingData = meetingData;
+module.exports.compareStartTimes = compareStartTimes;
 module.exports.convertTimeToNumbers = convertTimeToNumbers;
+module.exports.getTodaysDate = getTodaysDate;

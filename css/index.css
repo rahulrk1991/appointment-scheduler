@@ -1,34 +1,38 @@
 body {
   font-family: "Open Sans", sans-serif;
   margin: 0em;
+  background-color: #e6e6e6;
 }
 .container {
   position: relative;
   width: 100%;
-  max-width: 760px;
-  padding: 0 20px;
-  margin: 0 auto;
   box-sizing: border-box;
 }
 .header {
+  position: fixed;
+  width: 100%;
+  z-index: 100;
   text-align: center;
   background-color: #1e90ff;
   color: white;
-  padding: 0.4em 0em;
 }
 .calendar {
+  position: absolute;
   height: 1440px;
-  margin-top: 15px;
+  margin-top: 100px;
+  margin-left: 50%;
+  transform: translate(-50%, 0);
+  max-width: 760px;
 }
 .time {
   width: 70px;
   height: 100%;
   display: inline-block;
-  /* border: 1px solid black; */
+  border-right: 1px solid grey;
 }
-#time-table {
+#timeTable {
   float: right;
-  margin-top: -15px;
+  margin-top: -12px;
 }
 .table-row {
   height: 119px;
@@ -40,14 +44,16 @@ body {
   height: 100%;
   position: relative;
   display: inline-block;
-  border: 1px solid black;
+  /* border-left: 1px solid #888888; */
 }
 .meeting {
   position: absolute;
   display: inline-block;
+  text-align: center;
   background-color: #82c6b6;
   border: 1px solid grey;
-  text-align: center;
+  border-radius: 9px;
+  box-shadow: 5px 10px #888888;
 }
 .button {
   position: fixed;
@@ -56,14 +62,14 @@ body {
   border-radius: 4px;
   background: transparent;
 }
-#add-form {
-  position: fixed;
-  padding: 20px;
-  right: 75px;
-  top:120px;
-  background-color: lightgrey;
-  visibility: visible;
-}
 .input {
   margin: 10px;
+}
+.footer-form {
+  position: fixed;
+  width: 100%;
+  bottom: 0px;
+  z-index: 100;
+  text-align: center;
+  background-color: #1e90ff;
 }

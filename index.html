@@ -25,32 +25,29 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <div class="container">
     <div class="header">
-      <h2>Meeting Scheduler</h2>
       <h3 id="todaysDate">Today's Date</h3>
     </div>
     <div class="calendar">
       <div class="time">
-        <table id="time-table">
-        </table>
+        <table id="timeTable"></table>
       </div>
-      <div id="slots">
-
-      </div>
+      <div id="slots"></div>
     </div>
-    <button class="button" onclick="onClickAddMeeting()">+ Add meeting</button>
-    <div id="add-form">
+    <div class="footer-form">
       <form id="addMeetingForm">
+        <label>Add a new Meeting</label>
         <label>Name</label>
         <input type="text" class="input" name="id" placeholder="Meeting Name" value="Meeting 5" />
-        <br/>
+
         <label>Starts</label>
         <input type="time" class="input" name="start" placeholder="Start Time" value="10:20" />
-        <br/>
+
         <label>Ends</label>
         <input type="time" class="input" name="end" placeholder="End Time" value="10:30" />
-        <br/>
+
+        <button type="button" class="input" onclick="submitForm()">Save</button>
       </form>
-      <button type="button" class="input" onclick="submitForm()">Save</button>
+
     </div>
   </div>
 
