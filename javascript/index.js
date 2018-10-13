@@ -23,8 +23,8 @@ let meetingData = [
 
 document.addEventListener("DOMContentLoaded", function() {
   setTodaysDate();
-  initializeTimeLine();
-  buildMeetings(meetingData);
+  buildTimeLine();
+  renderMeetings(meetingData);
 });
 
 function getTodaysDate() {
@@ -38,7 +38,7 @@ function setTodaysDate() {
   todaysDateDiv.innerHTML = `Schedule - ${todaysDate}`;
 }
 
-function initializeTimeLine() {
+function buildTimeLine() {
   let timeTable = document.getElementById("timeTable");
   for (let i = 9; i <= 21; i++) {
     let tr = `<tr class="table-row"><td>${i} : 00 -</td></tr>`;
@@ -59,7 +59,6 @@ function buildMeetings(meeting) {
   let i = 0;
   while (i < meeting.length) {
     let room = [];
-    console.log(i);
     room.push(meeting[i].end);
     meeting[i].room = room.length - 1;
     let max = meeting[i].end;
@@ -85,10 +84,11 @@ function buildMeetings(meeting) {
     i = j + 1;
   }
   console.log(meeting);
-  renderMeetings(meeting);
+  return meeting;
 }
 
-function renderMeetings(meetings) {
+function renderMeetings(meetingData) {
+  let meetings = buildMeetings(meetingData);
   let slots = document.getElementById("slots");
   slots.innerHTML = "";
   for (let i = 0; i < meetings.length; i++) {
@@ -110,8 +110,23 @@ function convertTimeToNumbers(time) {
   else return (hours - 9) * 60 + minutes;
 }
 
+function isValidForm(form) {
+  console.log(form);
+  for (let i = 0; i < form.elements.length; i++) {
+    let element = form.elements[i];
+    if (element.name == "id") {
+      if (!element.value.match(/^[\w\-\s]+$/))
+        return new Error(
+          "Name can consist of only letters, numbers,underscore and hyphen"
+        );
+    }
+    return {};
+  }
+}
+
 function submitForm() {
   let form = document.getElementById("addMeetingForm");
+  console.log(isValidForm(form));
   let newMeeting = new Object();
   for (let i = 0; i < form.elements.length; i++) {
     let element = form.elements[i];
@@ -122,10 +137,11 @@ function submitForm() {
     }
   }
   meetingData.push(newMeeting);
-  buildMeetings(meetingData);
+  renderMeetings(meetingData);
 }
 
 module.exports.meetingData = meetingData;
 module.exports.compareStartTimes = compareStartTimes;
 module.exports.convertTimeToNumbers = convertTimeToNumbers;
 module.exports.getTodaysDate = getTodaysDate;
+module.exports.buildMeetings = buildMeetings;
