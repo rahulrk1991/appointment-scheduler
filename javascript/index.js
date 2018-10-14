@@ -135,6 +135,20 @@ function isValidForm(meeting) {
   return "";
 }
 
+function showNotification(notification) {
+  console.log("Showing a notification");
+  let errorLabel = document.getElementById("errorLabel");
+  errorLabel.innerHTML = notification;
+  setTimeout(function() {
+    errorLabel.innerHTML = "";
+  }, 5000);
+}
+
+function scrollToNewMeeting(meeting) {
+  console.log(meeting.start, window.innerHeight);
+  window.scrollTo(0, meeting.start);
+}
+
 function submitForm() {
   let form = document.getElementById("addMeetingForm");
   let newMeeting = new Object();
@@ -146,17 +160,20 @@ function submitForm() {
       newMeeting[element.name] = element.value;
     }
   }
-  let errorLabel = document.getElementById("errorLabel");
-  errorLabel.innerHTML = isValidForm(newMeeting);
-  if (errorLabel.innerHTML != "") {
+  error = isValidForm(newMeeting);
+  if (error != "") {
+    showNotification(error);
     return;
   }
   meetingData.push(newMeeting);
   renderMeetings(meetingData);
+  scrollToNewMeeting(newMeeting);
+  showNotification("You successfully added a new meeting!");
+
   //Clear values from form after submit
-  for (let i = 0; i < form.elements.length; i++) {
-    form.elements[i].value = "";
-  }
+  // for (let i = 0; i < form.elements.length; i++) {
+  //   form.elements[i].value = "";
+  // }
 }
 
 module.exports.meetingData = meetingData;
