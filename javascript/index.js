@@ -111,8 +111,14 @@ function convertTimeToNumbers(time) {
 }
 
 function isValidForm(meeting) {
+  if (meeting.id == "") {
+    return "Meeting name cannot be empty";
+  }
   if (!meeting.id.match(/^[\w\-\s]+$/)) {
     return "Name can consist of only letters, numbers,underscore and hyphen";
+  }
+  if (isNaN(meeting.start) || isNaN(meeting.end)) {
+    return "Start time and end time cannot be empty";
   }
   if (meeting.start > meeting.end) {
     return "End time can't be before start time";
@@ -147,6 +153,10 @@ function submitForm() {
   }
   meetingData.push(newMeeting);
   renderMeetings(meetingData);
+  //Clear values from form after submit
+  for (let i = 0; i < form.elements.length; i++) {
+    form.elements[i].value = "";
+  }
 }
 
 module.exports.meetingData = meetingData;

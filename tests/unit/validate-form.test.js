@@ -1,6 +1,20 @@
 const { isValidForm } = require("../../javascript/index.js");
 
 describe("Form validations", () => {
+  it("Start time should be entered", () => {
+    let meetingObject = { id: "Meeting_1", start: NaN, end: 60 };
+    expect(isValidForm(meetingObject)).toBe(
+      "Start time and end time cannot be empty"
+    );
+  });
+
+  it("End time should be entered", () => {
+    let meetingObject = { id: "Meeting_1", start: 0, end: NaN };
+    expect(isValidForm(meetingObject)).toBe(
+      "Start time and end time cannot be empty"
+    );
+  });
+
   it("Start time can't be before 9:00am", () => {
     let meetingObject = { id: "Meeting_1", start: -20, end: 60 };
     expect(isValidForm(meetingObject)).toBe(
@@ -54,6 +68,13 @@ describe("Form validations", () => {
     let meetingObject = { id: "Meeting_1", start: 700, end: 705 };
     expect(isValidForm(meetingObject)).toBe(
       "Duration should be minimum of 10 minutes"
+    );
+  });
+
+  it("Meeting name cannot be empty", () => {
+    let meetingObject = { id: "", start: 0, end: 60 };
+    expect(isValidForm(meetingObject)).toBe(
+      "Meeting name cannot be empty"
     );
   });
 
