@@ -4,9 +4,9 @@
   "description": "Assignment for Redmart by Rahul Khanvilkar",
   "main": "index.html",
   "scripts": {
-    "test": "jest --watchAll --verbose",
+    "test": "jest",
     "start": "npm run open",
-    "open": "concurrently \"http-server -a localhost -p 3000\" \"open http://localhost:3000/build\""
+    "open": "concurrently \"http-server -a localhost -p 3001\" \"open http://localhost:3001/build\""
   },
   "author": "Rahul Khanvilkar",
   "license": "ISC",
