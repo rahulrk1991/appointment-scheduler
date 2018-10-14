@@ -83,7 +83,7 @@ function buildMeetings(meeting) {
     }
     i = j + 1;
   }
-  console.log(meeting);
+  console.log("Built meetings");
   return meeting;
 }
 
@@ -96,37 +96,41 @@ function renderMeetings(meetingData) {
     let slot = `<div class="meeting" style="width:${600 /
       meeting.size}px;height:${(meeting.end - meeting.start) *
       2}px;margin-top:${meeting.start * 2}px;margin-left:${meeting.room *
-      (600 / meeting.size)}px;z-index:${meeting.room}">${meeting.id}</div>`;
+      (600 / meeting.size)}px;z-index:${meeting.room}"><p class="meetingName">${
+      meeting.id
+    }</p></div>`;
     slots.innerHTML += slot;
   }
+  console.log("Rendered Meetings");
 }
 
 function convertTimeToNumbers(time) {
   let hours = parseInt(time.substring(0, 2));
   let minutes = parseInt(time.substring(3, 5));
-  let timeInMinutes = (hours - 9) * 60 + minutes;
-  if (timeInMinutes < 0) return 0;
-  else if (timeInMinutes > 720) return 720;
-  else return (hours - 9) * 60 + minutes;
+  return (hours - 9) * 60 + minutes;
 }
 
-function isValidForm(form) {
-  console.log(form);
-  for (let i = 0; i < form.elements.length; i++) {
-    let element = form.elements[i];
-    if (element.name == "id") {
-      if (!element.value.match(/^[\w\-\s]+$/))
-        return new Error(
-          "Name can consist of only letters, numbers,underscore and hyphen"
-        );
-    }
-    return {};
+function isValidForm(meeting) {
+  if (!meeting.id.match(/^[\w\-\s]+$/)) {
+    return "Name can consist of only letters, numbers,underscore and hyphen";
   }
+  if (meeting.start > meeting.end) {
+    return "End time can't be before start time";
+  }
+  if (meeting.start < 0 || meeting.start > 700) {
+    return "Start time can't be before 9:00am or after 9:50pm";
+  }
+  if (meeting.end < 10 || meeting.end > 720) {
+    return "End time can't be before 9:10am or after 10:00pm";
+  }
+  if (meeting.start + 10 > meeting.end) {
+    return "Duration should be minimum of 10 minutes";
+  }
+  return "";
 }
 
 function submitForm() {
   let form = document.getElementById("addMeetingForm");
-  console.log(isValidForm(form));
   let newMeeting = new Object();
   for (let i = 0; i < form.elements.length; i++) {
     let element = form.elements[i];
@@ -135,6 +139,11 @@ function submitForm() {
     } else {
       newMeeting[element.name] = element.value;
     }
+  }
+  let errorLabel = document.getElementById("errorLabel");
+  errorLabel.innerHTML = isValidForm(newMeeting);
+  if (errorLabel.innerHTML != "") {
+    return;
   }
   meetingData.push(newMeeting);
   renderMeetings(meetingData);
@@ -145,3 +154,4 @@ module.exports.compareStartTimes = compareStartTimes;
 module.exports.convertTimeToNumbers = convertTimeToNumbers;
 module.exports.getTodaysDate = getTodaysDate;
 module.exports.buildMeetings = buildMeetings;
+module.exports.isValidForm = isValidForm;
